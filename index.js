@@ -5,7 +5,7 @@ require("dotenv").config();
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 const contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
-const mainChatId = "-1002253121294";
+const mainChatId = "";
 const mainWallet = {
    address: "TNFm9JdGoj58wnkos742obF8mN4Xcm5n6X",
    deposit: {
@@ -34,6 +34,9 @@ const mainWallet = {
 
 bot.on("message", async (ctx) => {
    if (!ctx.message.text) return;
+	if (ctx.message.text.trim() === "/qwe") {
+		await ctx.reply("!");
+   }
 });
 bot.launch();
 
