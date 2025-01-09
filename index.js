@@ -5,7 +5,7 @@ require("dotenv").config();
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 const contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
-const mainChatId = "";
+const mainChatId = "-1002253121294";
 const mainWallet = {
    address: "TNFm9JdGoj58wnkos742obF8mN4Xcm5n6X",
    deposit: {
