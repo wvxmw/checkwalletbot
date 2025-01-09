@@ -34,8 +34,8 @@ const mainWallet = {
 
 bot.on("message", async (ctx) => {
    if (!ctx.message.text) return;
-	if (ctx.message.text.trim() === "/qwe") {
-		await ctx.reply("!");
+   if (ctx.message.text.trim() === "/asdfgh") {
+      await ctx.reply("!");
    }
 });
 bot.launch();
