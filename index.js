@@ -6,6 +6,12 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 
 const contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
 const mainChatId = "-1002253121294";
+
+const lastTs = {
+   get: "",
+   send: "",
+};
+
 const mainWallet = {
    address: "TNFm9JdGoj58wnkos742obF8mN4Xcm5n6X",
    deposit: {
@@ -36,6 +42,13 @@ bot.on("message", async (ctx) => {
    if (!ctx.message.text) return;
    if (ctx.message.text.trim() === "/asdfgh") {
       await ctx.reply("!");
+   } else if (ctx.message.text.trim() === "/checktime") {
+      await ctx.reply(
+         `Получено: ${timestampToDate(
+            lastTs.get,
+            "HH:mm:ss"
+         )}.${(new Date(lastTs.get).getMilliseconds())}\nОтправлено: ${timestampToDate(lastTs.send, "HH:mm:ss")}.${(new Date(lastTs.send).getMilliseconds())}`
+      );
    }
 });
 bot.launch();
@@ -63,6 +76,7 @@ async function checkDeposit(wallet) {
          const transfers = data.data;
          if (wallet.deposit.id !== "" && transfers.length > 0) {
             if (wallet.deposit.id !== transfers[0].transaction_id) {
+               lastTs.get = Date.now();
                let maxI = transfers.length - 1;
                for (let i = 0; i < transfers.length; i++) {
                   if (transfers[i].transaction_id === wallet.deposit.id) {
@@ -84,9 +98,11 @@ async function checkDeposit(wallet) {
                               "HH:mm:ss"
                            )}`
                         );
+                        lastTs.send = Date.now();
                      }
                   }
                }
+
                wallet.deposit.id = transfers[0].transaction_id;
                wallet.deposit.timeStamp = transfers[0].block_timestamp;
             }
